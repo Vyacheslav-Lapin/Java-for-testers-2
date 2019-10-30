@@ -4,17 +4,17 @@ init:
 
 #	maven-wrapper
 	mvn -N io.takari:maven:wrapper -Dmaven=3.6.2
-	rm mvnw.cmd
-	chmod +x ./mvnw
-	echo "\n/.mvn\n/mvnw*\n" >> .git/info/exclude
+	rm mvnw
+#	chmod +x ./mvnw
+	echo "\n/.mvn\n/mvnw.cmd*\n" >> .git/info/exclude
 
 #	jenv
-	jenv local openjdk64-`cat pom.xml | xml sel -N pom=http://maven.apache.org/POM/4.0.0 -t -v /pom:project/pom:properties/pom:java.version`
-	echo "\n/.java-version\n" >> .git/info/exclude
+#	jenv local openjdk64-`cat pom.xml | xml sel -N pom=http://maven.apache.org/POM/4.0.0 -t -v /pom:project/pom:properties/pom:java.version`
+#	echo "\n/.java-version\n" >> .git/info/exclude
 
 #	checkstyler
-	curl -O https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml
-	echo "\n/google_checks.xml\n" >> .git/info/exclude
+#	curl -O https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml
+#	echo "\n/google_checks.xml\n" >> .git/info/exclude
 
 uninit:
 	rm -rf .mvn mvnw* google_checks.xml .git/info/exclude

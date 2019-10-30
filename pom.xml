@@ -39,6 +39,11 @@
 
     <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
     <maven-assembly-plugin.mainClass>${mainClass}</maven-assembly-plugin.mainClass>
+
+    <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
+    <checkstyle.version>8.20</checkstyle.version>
+
+    <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
     <!--endregion-->
 
   </properties>
@@ -131,6 +136,36 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>${maven-checkstyle-plugin.version}</version>
+        <configuration><!--http://maven.apache.org/plugins/maven-checkstyle-plugin/usage.html-->
+          <configLocation>google_checks.xml</configLocation>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>${checkstyle.version}</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>${versions-maven-plugin.version}</version>
+        <configuration>
+          <generateBackupPoms>false</generateBackupPoms>
+          <rulesUri>file://${user.dir}/ruleset.xml</rulesUri>
+        </configuration>
       </plugin>
 
     </plugins>
