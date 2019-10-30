@@ -28,6 +28,7 @@
     <!--region Libs -->
     <vavr.version>1.0.0-alpha-3</vavr.version>
     <lombok.version>1.18.10</lombok.version>
+    <commons-math3.version>3.6.1</commons-math3.version>
     <!--<manifold-version>2019.1.23</manifold-version>-->
     <!--endregion-->
 
@@ -39,9 +40,6 @@
 
     <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
     <maven-assembly-plugin.mainClass>${mainClass}</maven-assembly-plugin.mainClass>
-
-    <maven-checkstyle-plugin.version>3.0.0</maven-checkstyle-plugin.version>
-    <checkstyle.version>8.20</checkstyle.version>
 
     <versions-maven-plugin.version>2.7</versions-maven-plugin.version>
     <!--endregion-->
@@ -80,6 +78,12 @@
     <!--  <artifactId>manifold-all</artifactId>-->
     <!--  <version>${manifold-version}</version>-->
     <!--</dependency>-->
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-math3</artifactId>
+      <version>${commons-math3.version}</version>
+    </dependency>
 
   </dependencies>
 
@@ -136,27 +140,6 @@
             </goals>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${maven-checkstyle-plugin.version}</version>
-        <configuration><!--http://maven.apache.org/plugins/maven-checkstyle-plugin/usage.html-->
-          <configLocation>google_checks.xml</configLocation>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-        <dependencies>
-          <dependency>
-            <groupId>com.puppycrawl.tools</groupId>
-            <artifactId>checkstyle</artifactId>
-            <version>${checkstyle.version}</version>
-          </dependency>
-        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
