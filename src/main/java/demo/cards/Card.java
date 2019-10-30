@@ -1,5 +1,9 @@
 package demo.cards;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class Card {
 
   Suit suit;
@@ -32,6 +36,9 @@ public class Card {
     System.arraycopy(cards(Suit.HEARTS), 0, cards, 18, 9);
     System.arraycopy(cards(Suit.SPADES), 0, cards, 27, 9);
 
-    return cards;
+//    MathArrays.shuffle(cards);
+    List<Card> list = Arrays.asList(cards);
+    Collections.shuffle(list);
+    return list.toArray(new Card[0]);
   }
 }
