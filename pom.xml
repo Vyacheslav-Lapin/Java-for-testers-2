@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="
+          http://maven.apache.org/POM/4.0.0
+          http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>ru.vlapin</groupId>
+  <artifactId>Java-for-testers</artifactId>
+  <version>${revision}</version>
+
+  <properties>
+
+    <!--region General-->
+    <mainClass>demo.First</mainClass>
+    <java.version>13</java.version>
+    <revision>0.0.1-SNAPSHOT</revision>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!--endregion-->
+
+    <!--region BOMs -->
+    <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
+    <!--endregion-->
+
+    <!--region Libs -->
+    <vavr.version>1.0.0-alpha-3</vavr.version>
+    <lombok.version>1.18.10</lombok.version>
+    <!--<manifold-version>2019.1.23</manifold-version>-->
+    <!--endregion-->
+
+    <!--region Plugins-->
+    <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
+    <maven.compiler.parameters>true</maven.compiler.parameters>
+    <maven.compiler.forceJavacCompilerUse>true</maven.compiler.forceJavacCompilerUse>
+
+    <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
+    <maven-assembly-plugin.mainClass>${mainClass}</maven-assembly-plugin.mainClass>
+    <!--endregion-->
+
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+
+    <dependency>
+      <groupId>io.vavr</groupId>
+      <artifactId>vavr</artifactId>
+      <version>${vavr.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <scope>provided</scope>
+      <optional>true</optional>
+    </dependency>
+    <!--<dependency>-->
+    <!--  <groupId>systems.manifold</groupId>-->
+    <!--  <artifactId>manifold-all</artifactId>-->
+    <!--  <version>${manifold-version}</version>-->
+    <!--</dependency>-->
+
+  </dependencies>
+
+  <build>
+
+    <defaultGoal>verify</defaultGoal>
+
+    <plugins>
+
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <compilerArgs>
+            <arg>--enable-preview</arg>
+            <!--<arg>-Xplugin:Manifold</arg>-->
+          </compilerArgs>
+          <!--<annotationProcessorPaths>-->
+            <!--<processorPath>-->
+            <!--  <groupId>systems.manifold</groupId>-->
+            <!--  <artifactId>manifold-all</artifactId>-->
+            <!--  <version>${manifold-version}</version>-->
+            <!--</processorPath>-->
+            <!--<processorPath>-->
+            <!--  <groupId>org.projectlombok</groupId>-->
+            <!--  <artifactId>lombok</artifactId>-->
+            <!--  <version>${lombok.version}</version>-->
+            <!--</processorPath>-->
+          <!--</annotationProcessorPaths>-->
+          <!--<annotationProcessors>-->
+          <!--  <annotationProcessor>lombok.launch.AnnotationProcessorHider$AnnotationProcessor</annotationProcessor>-->
+          <!--</annotationProcessors>-->
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>${maven-assembly-plugin.version}</version>
+        <configuration><!-- http://maven.apache.org/plugins/maven-assembly-plugin/usage.html -->
+          <archive>
+            <manifest>
+              <mainClass>${maven-assembly-plugin.mainClass}</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id> <!-- this is used for inheritance merges -->
+            <phase>package</phase> <!-- bind to the packaging phase -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+
+  </build>
+
+</project>
