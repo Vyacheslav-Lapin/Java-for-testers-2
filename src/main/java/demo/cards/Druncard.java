@@ -1,5 +1,7 @@
 package demo.cards;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Druncard {
 
   public static final int KOLODA = 36;
@@ -36,7 +38,7 @@ public class Druncard {
 
   }
 
-  public static void setCard(int playerIndex, Card... cards) {
+  public static void setCard(int playerIndex, @NotNull Card... cards) {
     for (Card card : cards)
       players[playerIndex][nextTail(playerIndex)] = card;
   }
