@@ -30,6 +30,12 @@
     <lombok.version>1.18.10</lombok.version>
     <commons-math3.version>3.6.1</commons-math3.version>
     <!--<manifold-version>2019.1.23</manifold-version>-->
+
+    <checker.version>2.11.1</checker.version>
+    <annotations.version>17.0.0</annotations.version>
+    <jcip-annotations.version>1.0</jcip-annotations.version>
+    <spotbugs.version>4.0.0-beta4</spotbugs.version>
+    <error_prone_annotations.version>2.3.3</error_prone_annotations.version>
     <!--endregion-->
 
     <!--region Plugins-->
@@ -78,6 +84,39 @@
     <!--  <artifactId>manifold-all</artifactId>-->
     <!--  <version>${manifold-version}</version>-->
     <!--</dependency>-->
+
+    <!--region Common Annotations (CheckerFramework, JetBrains, SpotBugs, ErrorProne) -->
+    <dependency>
+      <groupId>org.checkerframework</groupId>
+      <artifactId>checker</artifactId>
+      <version>${checker.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains</groupId>
+      <artifactId>annotations</artifactId>
+      <version>${annotations.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+    <groupId>net.jcip</groupId>
+    <artifactId>jcip-annotations</artifactId>
+    <version>${jcip-annotations.version}</version>
+    <optional>true</optional>
+  </dependency>
+    <dependency>
+      <groupId>com.github.spotbugs</groupId>
+      <artifactId>spotbugs-annotations</artifactId>
+      <version>${spotbugs.version}</version>
+      <optional>true</optional>
+    </dependency>
+    <dependency>
+      <groupId>com.google.errorprone</groupId>
+      <artifactId>error_prone_annotations</artifactId>
+      <version>${error_prone_annotations.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <!--endregion-->
 
     <dependency>
       <groupId>org.apache.commons</groupId>

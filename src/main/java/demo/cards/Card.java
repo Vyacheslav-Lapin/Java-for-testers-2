@@ -1,18 +1,17 @@
 package demo.cards;
 
+import static java.lang.Math.abs;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.jetbrains.annotations.NotNull;
 
-public class Card {
+@lombok.Value
+public class Card implements Comparable<Card> {
 
   Suit suit;
   Value value;
-
-  public Card(Suit suit, Value value) {
-    this.suit = suit;
-    this.value = value;
-  }
 
   static Card[] cards(Suit suit) {
     return new Card[] {
@@ -40,5 +39,11 @@ public class Card {
     List<Card> list = Arrays.asList(cards);
     Collections.shuffle(list);
     return list.toArray(new Card[0]);
+  }
+
+  @Override
+  public int compareTo(@NotNull Card card) {
+    int winner = value.ordinal() - card.value.ordinal();
+    return abs(winner) == 8 ? -winner : winner;
   }
 }

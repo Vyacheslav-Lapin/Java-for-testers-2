@@ -2,9 +2,11 @@ package demo.cards;
 
 public class Druncard {
 
+  public static final int KOLODA = 36;
+
   static int[] tails = new int[]{18, 18};
   static int[] heads = new int[2];
-  static Card[][] players = new Card[2][36];
+  static Card[][] players = new Card[2][KOLODA];
 
   public static void main(String... __) {
 
@@ -16,17 +18,16 @@ public class Druncard {
       Card cardOfPlayer1 = getCardOfPlayer(0);
       Card cardOfPlayer2 = getCardOfPlayer(1);
 
-      if (cardOfPlayer1.value.ordinal() > cardOfPlayer2.value.ordinal()) {
-        players[0][tails[0]++] = cardOfPlayer1;
-        players[0][tails[0]++] = cardOfPlayer2;
+      int winner = cardOfPlayer1.compareTo(cardOfPlayer2);
+      if (winner > 0) {
+        setCard(0, cardOfPlayer1, cardOfPlayer2);
         winnerFirst = true;
-      } else if (cardOfPlayer1.value.ordinal() < cardOfPlayer2.value.ordinal()) {
-        players[1][tails[1]++] = cardOfPlayer1;
-        players[1][tails[1]++] = cardOfPlayer2;
+      } else if (winner < 0) {
+        setCard(1, cardOfPlayer1, cardOfPlayer2);
         winnerFirst = false;
       } else {
-        players[0][tails[0]++] = cardOfPlayer1;
-        players[1][tails[1]++] = cardOfPlayer2;
+        setCard(0, cardOfPlayer1);
+        setCard(1, cardOfPlayer2);
       }
     } while (heads[0] != tails[0]);
 
@@ -35,8 +36,21 @@ public class Druncard {
 
   }
 
+  public static void setCard(int playerIndex, Card... cards) {
+    for (Card card : cards)
+      players[playerIndex][nextTail(playerIndex)] = card;
+  }
+
+  private static int nextTail(int playerIndex) {
+    return tails[playerIndex] = (tails[playerIndex] + 1) % KOLODA;
+  }
+
+  private static int nextHead(int playerIndex) {
+    return (heads[playerIndex] + 1) % KOLODA;
+  }
+
   private static Card getCardOfPlayer(int index) {
-    return players[index][heads[index]++];
+    return players[index][nextHead(index)];
   }
 
   private static void init() {
