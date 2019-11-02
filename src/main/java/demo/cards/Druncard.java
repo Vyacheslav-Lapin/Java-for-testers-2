@@ -1,12 +1,14 @@
 package demo.cards;
 
+import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 
+@Slf4j
 public class Druncard {
 
   public static final int KOLODA = 36;
 
-  static int[] tails = new int[]{18, 18};
+  static int[] tails = {18, 18};
   static int[] heads = new int[2];
   static Card[][] players = new Card[2][KOLODA];
 
@@ -14,45 +16,47 @@ public class Druncard {
 
     init();
 
-    boolean winnerFirst = true;
-
+    int winner;
     do {
       Card cardOfPlayer1 = getCardOfPlayer(0);
       Card cardOfPlayer2 = getCardOfPlayer(1);
 
-      int winner = cardOfPlayer1.compareTo(cardOfPlayer2);
-      if (winner > 0) {
-        setCard(0, cardOfPlayer1, cardOfPlayer2);
-        winnerFirst = true;
-      } else if (winner < 0) {
-        setCard(1, cardOfPlayer1, cardOfPlayer2);
-        winnerFirst = false;
-      } else {
+      winner = cardOfPlayer1.compareTo(cardOfPlayer2);
+
+      log.info("Игрок №1 ходит картой {}, игрок №2 - картой {}, победил{}",
+          cardOfPlayer1,
+          cardOfPlayer2,
+          winner > 0
+              ? " игрок №1"
+              : winner < 0 ? " игрок №2" : "а дружба!");
+
+      if (winner > 0) setCard(0, cardOfPlayer1, cardOfPlayer2);
+      else if (winner < 0) setCard(1, cardOfPlayer1, cardOfPlayer2);
+      else {
         setCard(0, cardOfPlayer1);
         setCard(1, cardOfPlayer2);
       }
     } while (heads[0] != tails[0]);
 
-    System.out.println(winnerFirst ? "Первый игрок выиграл"
-                           : "Второй игрок выиграл!");
+    log.info(winner > 0 ? "Первый игрок выиграл" : "Второй игрок выиграл!");
 
   }
 
   public static void setCard(int playerIndex, @NotNull Card... cards) {
     for (Card card : cards)
-      players[playerIndex][nextTail(playerIndex)] = card;
+      players[playerIndex][next(tails, playerIndex)] = card;
   }
 
-  private static int nextTail(int playerIndex) {
-    return tails[playerIndex] = (tails[playerIndex] + 1) % KOLODA;
-  }
-
-  private static int nextHead(int playerIndex) {
-    return (heads[playerIndex] + 1) % KOLODA;
+  private static int next(@NotNull int[] arr, int playerIndex) {
+    try {
+      return arr[playerIndex];
+    } finally {
+      arr[playerIndex] = (arr[playerIndex] + 1) % KOLODA;
+    }
   }
 
   private static Card getCardOfPlayer(int index) {
-    return players[index][nextHead(index)];
+    return players[index][next(heads, index)];
   }
 
   private static void init() {
